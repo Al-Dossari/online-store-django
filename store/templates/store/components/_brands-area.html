@@ -1,0 +1,35 @@
+{%load store_tags%}
+{% get_categories as categories %}
+<div class="brands-area">
+    <div class="zigzag-bottom"></div>
+
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="brand-wrapper">
+
+                    <div class="brand-list">
+                        <h5>Наши бренды</h5>
+                        {% for category in categories %}
+                        {% if category.image%}
+                        <img src="{{category.image.url}}"
+                             alt="">
+                        {%endif%}
+
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div> <!-- End brands area -->

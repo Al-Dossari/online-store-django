@@ -1,0 +1,74 @@
+{% load static %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="product-images">
+            <div class="product-main-img">
+                <img src="{{product.get_first_photo}}" alt="">
+            </div>
+
+            <div class="product-gallery">
+                <img src="img/product-thumb-1.jpg" alt="">
+                <img src="img/product-thumb-2.jpg" alt="">
+                <img src="img/product-thumb-3.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="product-inner">
+            <h2 class="product-name">{{product.title}}</h2>
+            <div class="product-inner-price">
+                <ins>${{product.price}}</ins>
+                <del>$100.00</del>
+            </div>
+
+<!--{% url 'to_cart' product.pk 'add'%}-->
+            {% if product.quantity > 0 %}
+            <a href="" class="btn btn-success">Добавить корзину </a>
+
+            {% else %}
+            <a href="{{ product.get_absolute_url }}" class="btn btn-danger">Нет в наличие </a>
+
+
+            {% endif %}
+
+            <div class="product-inner-category">
+                <p>Категория: <a href="{{product.category.get_absolute_url}}">{{product.category}}</a></p>
+            </div>
+
+            <div role="tabpanel">
+                <ul class="product-tab" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home"
+                                                              role="tab" data-toggle="tab">Description</a>
+                    </li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                               data-toggle="tab">Reviews</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home">
+                        <h2>Product Description</h2>
+                        <p>{{product.description}}</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile">
+                        <h2>Отзывы</h2>
+                        <div class="submit-review">
+                            <form action="{% url 'save_review' product.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Оставте отзыв</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                              name="text"></textarea>
+                                </div>
+                                <button class="btn btn-success rounded text-end" type="submit">Отправить</button>
+
+                            </form>
+
+                        </div>
+                        {% include 'store/components/_reviews.html' %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

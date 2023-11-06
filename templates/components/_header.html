@@ -1,0 +1,29 @@
+{% load static %}
+<div class="header-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="user-menu">
+                    <ul>
+                        {% if user.is_authenticated %}<li><a href="#"><i class="fa fa-user"> {{user.username.capitalize}}</i></a></li>
+                        <li><a href="{% url 'my_favourite' %}"><i class="fa fa-heart"></i> Wishlist</a></li>
+
+                        <li><a href="{% url 'cart' %}"><i class="fa fa-user"></i> My Cart</a></li>
+
+                        <li><a href="{% url 'checkout' %}"><i class="fa fa-user"></i> Checkout</a></li>
+
+                        <li><a href="{% url 'logout' %}"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                        </li>
+
+                        {% else %}
+                        <li><a href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div> <!-- End header area -->

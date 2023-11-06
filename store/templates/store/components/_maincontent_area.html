@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="maincontent-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for category in categories %}
+
+                <div class="latest-product">
+                    {% for cat in category.subcategories.all %}
+                    {% if cat.products %}
+                    <h2 class="section-title"><a href="{{cat.get_absolute_url}}">{{cat.title}}</a></h2>
+                    {%else%}
+                    <h1></h1>
+                    {%endif%}
+                    <div class="product-carousel">
+                        {% for product in cat.products.all %}
+                        {% include 'components/_single_product.html' %}
+
+
+                        {% endfor %}
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div> <!-- End main content area -->

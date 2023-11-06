@@ -1,0 +1,24 @@
+{% load static %}
+{% load store_tags%}
+{% get_products as products %}
+<div class="slider-area">
+    <!-- Slider -->
+    <div class="block-slider block-slider4">
+        <ul class="" id="bxslider-home4">
+            {% for product in products %}
+            <li>
+                <img src="{{product.get_first_photo}}"  alt="Slide" style="width: auto; height: 195px;">
+                <div class="caption-group">
+                    <h2 class="caption title">
+                        {{product.title}}
+                    </h2>
+
+                    <a class="caption button-radius" href="{{product.get_absolute_url}}"><span class="icon"></span>Shop now</a>
+                </div>
+            </li>
+            {%endfor%}
+
+        </ul>
+    </div>
+    <!-- ./Slider -->
+</div> <!-- End slider area -->

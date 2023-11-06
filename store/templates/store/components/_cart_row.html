@@ -1,0 +1,72 @@
+{% load static %}
+
+
+
+
+<form method="post" action="#">
+    {% csrf_token %}
+    <table cellspacing="0" class="shop_table cart">
+        <thead>
+        <tr>
+            <th class="product-remove">&nbsp;</th>
+            <th class="product-thumbnail">&nbsp;</th>
+            <th class="product-name">Продукт</th>
+            <th class="product-price">Цена</th>
+            <th class="product-quantity">Количество</th>
+            <th class="product-subtotal">Общая</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in products %}
+        <tr class="cart_item">
+            <td class="product-remove">
+                <a title="Remove this item" class="remove" href="{% url 'to_cart' item.product.pk 'delete'%}">×</a>
+            </td>
+
+            <td class="product-thumbnail">
+                <a href="{{item.product.get_absolute_url}}"><img width="145" height="145" alt="poster_1_up"
+                                                                 class="shop_thumbnail"
+                                                                 src="{{item.product.get_first_photo}}"></a>
+            </td>
+
+            <td class="product-name">
+                <a href="single-product.html">{{item.product.title}}</a>
+            </td>
+
+            <td class="product-price">
+                <span class="amount">${{item.product.price}}</span>
+            </td>
+            {% if 'cart' in request.path %}
+            <td class="product-quantity">
+                {% if item.product.quantity > 0 %}
+                <a href="{% url 'to_cart' item.product.pk 'add' %}">
+                    <img src="{% static 'store/img/add.png' %}" alt=""
+                         class="chg-quantity update-cart" data-product="id" data-actions="add" width="10">
+                </a>
+                {% endif %}
+                {{item.quantity}}
+                <a href="{% url 'to_cart' item.product.pk 'delete' %}">
+                    <img src="{% static 'store/img/delete.png' %}" alt=""
+                         class="chg-quantity update-cart" data-product="id" data-actions="remove" width="10">
+                </a>
+            </td>
+            {% endif %}
+
+            <td class="product-subtotal">
+                <span class="amount">{{item.get_total_price}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td class="actions" colspan="6">
+                 <a href="{% url 'product_list' %}" class="button bg-dark btn btn-dark rounded" >Продолжить покупку </a>
+                        <a href="{% url 'clear_cart' %}" class="btn btn-danger rounded "> Очистить корзину</a>
+                        <a href="{% url 'checkout' %}" class="btn btn-success rounded">Оформить заказ</a>
+
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

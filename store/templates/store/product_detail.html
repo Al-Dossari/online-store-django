@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title%}
+<title>{{product}}</title>
+{% endblock title%}
+
+{% block poster %}
+
+{% endblock poster %}
+
+{% block main %}
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Search Products</h2>
+                    <form action="{% url 'search' %}">
+                        <input name="q" type="search" placeholder="Поиск...">
+                        <input type="submit" value="Поиск">
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="product-content-right">
+                    <div class="product-breadcroumb">
+                        <a href="{% url 'product_list'%}">Home</a>
+                        <a href="{{product.category.parent.get_absolute_url}}">{{product.category.parent}}</a>
+                        <a href="{{product.category.get_absolute_url}}">{{product.category}}</a>
+                        <a href="{{product.get_absolute_url}}">{{product.title}}</a>
+                    </div>
+                    {% include 'store/components/_main_product.html' %}
+
+                    <div class="container mt-3 ">
+                        <div class="row p-5"> {% for product in products %}
+                            {% include 'store/components/_category_product.html' %}
+                            {% endfor%}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock main %}

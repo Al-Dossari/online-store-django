@@ -1,0 +1,47 @@
+{% load static %}
+{% load store_tags %}
+
+<div class="single-shop-product">
+
+    <div class="product_card-basket text-end">
+        {% if request.user.is_authenticated %}
+        {% get_favourite_products request.user as fav_products %}
+
+        {% endif%}
+
+        {% if product in fav_products and request.user.is_authenticated %}
+        <a href="{% url 'add_favourite' product.slug %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f50038" class="bi bi-heart-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+</svg>
+        </a>
+        {% else %}
+        <a href="{% url 'add_favourite' product.slug %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" class="bi bi-heart"
+                 viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+            </svg>
+        </a>
+
+        {% endif%}
+    </div>
+    <div class="product-f-image">
+
+        <a href="{{ product.get_absolute_url }}"><img src="{{ product.get_first_photo }}" alt="" width="180"></a>
+
+    </div>
+
+    <h2><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h2>
+
+    <div class="product-carousel-price">
+        <ins>${{product.price}}</ins>
+    </div>
+    <div class="product-option-shop">
+        {% if product.quantity > 0 %}
+        <a href="{% url 'to_cart' product.pk 'add'%}" class="btn btn-success">Добавить корзину </a>
+
+        {% else %} <a href="#" class="btn btn-danger">Нет в наличие </a>
+
+        {% endif %}
+    </div>
+</div>
